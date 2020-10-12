@@ -1,0 +1,11 @@
+.cardskeleton {
+    background-color: "whitesmoke",
+    width: "270px",
+    margin: "10px",
+    height: "auto",
+    marginTop: "10px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+};
