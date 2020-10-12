@@ -1,4 +1,4 @@
-# MovieDex
+# Movie Search
 
 ### A React practice project that browses movies
 Below is the generated README
