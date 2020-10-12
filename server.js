@@ -3,6 +3,9 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 require("dotenv").config();
 
+const MOVIE_DB_API_KEY = '5d943d6eb3e526a3d483e65c25762e8f';
+const OMDB_API_KEY = 'd3595fdbp';
+
 const app = express();
 
 if (process.env.NODE_ENV === "production") {
