@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const fetch = require("node-fetch");
 const fs = require("fs");
 require("dotenv").config();
@@ -8,10 +9,9 @@ const OMDB_API_KEY = 'd3595fdbp';
 
 const app = express();
 
-if (process.env.NODE_ENV === "production") {
-    console.log("Production environment");
-    app.use(express.static("client/build"));
-}
+app.use(express.static(path.join(__dirname, 'build')));
+
+
 app.get("/search/", async (req, res) => {
     try {
         const movieList = await fetch(
@@ -39,4 +39,9 @@ app.get("/imdb-data/", async (req, res) => {
     res.json(dataJSON);
 });
 
-app.listen(process.env.PORT || 3001, () => console.log(`Server running on ${process.env.PORT || 3001}!`));
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/build/index.html'));
+});
+
+
+app.listen(process.env.PORT || 5000, () => console.log(`Server running on ${process.env.PORT || 3001}!`));
