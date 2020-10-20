@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require('path');
+const path = require("path")
 const fetch = require("node-fetch");
 const fs = require("fs");
 require("dotenv").config();
@@ -44,4 +44,4 @@ app.get('*', (req,res) =>{
 });
 
 
-app.listen(process.env.PORT || 5000, () => console.log(`Server running on ${process.env.PORT || 3001}!`));
+app.listen(process.env.PORT || 5000, () => console.log(`Server running on ${process.env.PORT || 5000}!`));

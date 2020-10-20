@@ -4,19 +4,23 @@ import {
     Card,
     CardContent,
     CardMedia,
+    CardActionArea,
+    useMediaQuery,
     useTheme,
 } from "@material-ui/core";
 
 const MovieCard = (props) => {
     const [hover, setHover] = useState(false);
+    const theme = useTheme();
+    const isNotPhone = useMediaQuery(theme.breakpoints.up("sm"));
 
     const styles = {
-        display: "flex",
+        backgroundColor: "transparent",
         width: "270px",
         margin: "10px",
-        backgroundColor: "transparent",  
         height: "auto",
-        marginTop: "10px",    
+        marginTop: "10px",
+        display: "flex",
         flexDirection: "column",
         alignItems: "center",
         borderRadius: "15px",
@@ -24,6 +28,7 @@ const MovieCard = (props) => {
 
     return (
         <Card style={styles} raised={hover} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <CardActionArea onClick={() => props.openModal(props.id)}>
                 <CardMedia
                     component="img"
                     alt={`${props.title} poster`}
@@ -34,8 +39,9 @@ const MovieCard = (props) => {
                 <CardContent>
                     <h2 style={{ margin: "0px" }}>{props.title}</h2>
                     <h3 style={{ margin: "0px 0px 5px 0px" }}>{props.year}</h3>
-
+                    {isNotPhone ? null : "Tap to know more"}
                 </CardContent>
+            </CardActionArea>
         </Card>
     );
 };

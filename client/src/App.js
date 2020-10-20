@@ -5,12 +5,12 @@ import MovieContainer from "./components/MovieContainer";
 import Paginate from "./components/Paginate";
 
 const App = (props) => {
+    const [queryString, setQueryString] = useState("");
     const [page, setPage] = useState(1);
-    const [queryString, setQueryString] = useState('');
-    const [resultCount, setResultCount] = useState({
-        pagesCount: 0,
-        TotalResultsCount: 0,
-        curResults: 0,
+    const [num_pages_results, setNumPagesAndResults] = useState({
+        total_pages: 0,
+        total_results: 0,
+        present_results: 0,
     });
 
     const handlePageChange = (event, value) => {
@@ -20,15 +20,15 @@ const App = (props) => {
     return (
         <div className="App">
             <SearchBar queryString={queryString} setQueryString={setQueryString} />
-            {resultCount.TotalResultsCount > 0 ? (
+            {num_pages_results.total_results > 0 ? (
                 <Paginate
-                    curResults={resultCount.curResults}
-                    total_pages={resultCount.pagesCount}
-                    total_results={resultCount.TotalResultsCount}
+                    present_results={num_pages_results.present_results}
+                    total_pages={num_pages_results.total_pages}
+                    total_results={num_pages_results.total_results}
                     handleChange={handlePageChange}
                 />
             ) : null}
-            <MovieContainer queryString={queryString} page={page} setResultCount={setResultCount} />
+            <MovieContainer queryString={queryString} page={page} setNumPagesAndResults={setNumPagesAndResults} />
         </div>
     );
 };

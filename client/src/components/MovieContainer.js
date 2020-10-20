@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from "react";
 import MovieCard from "./MovieCard";
 import "../Stylesheets/MovieContainer.css";
+import MovieModal from "./MovieModal";
 import MovieCardSkeleton from "./MovieCardSkeleton";
 
-const MovieContainer = ({ setResultCount, queryString, page }) => {
+const MovieContainer = ({ setNumPagesAndResults, queryString, page }) => {
     const [movies, setMovies] = useState([]);
-    const [message, setMessage] = useState("");
     const [isLoading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [shouldModalDisplay, setModalDisplay] = useState(false);
+    const [tmdb_id, setId] = useState("");
+
+    const openModal = async (id) => {
+        setModalDisplay(true);
+        setId(id);
+    };
+
+    const closeModal = () => {
+        setModalDisplay(false);
+    };
 
     useEffect(() => {
         const abortController = new AbortController();
 
         if (queryString.length === 0) {
-            setResultCount({ total_pages: 0, total_results: 0, present_results: 0 });
+            setNumPagesAndResults({ total_pages: 0, total_results: 0, present_results: 0 });
             setLoading(true);
             setMessage("");
         }
@@ -32,7 +44,7 @@ const MovieContainer = ({ setResultCount, queryString, page }) => {
                         setMovies(results);
 
                         const present_results = results.length;
-                        setResultCount({ total_pages, total_results, present_results });
+                        setNumPagesAndResults({ total_pages, total_results, present_results });
 
                         setLoading(false);
 
@@ -57,7 +69,7 @@ const MovieContainer = ({ setResultCount, queryString, page }) => {
                 abortController.abort();
             };
         }
-    }, [queryString, page, setResultCount]);
+    }, [queryString, page, setNumPagesAndResults]);
 
     return (
         <>
@@ -72,12 +84,16 @@ const MovieContainer = ({ setResultCount, queryString, page }) => {
                             poster={movie.poster_path}
                             id={movie.id}
                             year={movie.release_date ? movie.release_date.split("-")[0] : null}
+                            openModal={openModal}
                         />
                     ))
                 ) : (
                     <h1>{message}</h1>
                 )}
             </div>
+            {shouldModalDisplay ? (
+                <MovieModal shouldModalDisplay={shouldModalDisplay} tmdb_id={tmdb_id} closeModal={closeModal} />
+            ) : null}
         </>
     );
 };

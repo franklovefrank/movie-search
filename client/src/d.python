@@ -1,0 +1,2 @@
+def significant(N1, S1, N2, S2):
+    
